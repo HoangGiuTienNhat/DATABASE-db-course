@@ -84,9 +84,9 @@ CREATE TABLE Product (
     Product_id INT IDENTITY(1,1) PRIMARY KEY,
     Store_id INT NOT NULL,
     Ten_san_pham NVARCHAR(200) NOT NULL,
-    Mo_ta_chi_tiet NVARCHAR(MAX), 
+    Mo_ta_chi_tiet NVARCHAR(MAX) NOT NULL, 
     Tinh_trang VARCHAR(20) CHECK (Tinh_trang IN ('New', 'Used', 'Refurbished')),
-    Trong_luong DECIMAL(10,2) CHECK (Trong_luong > 0),
+    Trong_luong DECIMAL(10,2) NOT NULL CHECK (Trong_luong > 0),
     Trang_thai_dang VARCHAR(20) DEFAULT 'Hidden' CHECK (Trang_thai_dang IN ('Active', 'Hidden', 'Deleted')),
     Ngay_dang DATETIME DEFAULT GETDATE(),
     CONSTRAINT FK_Product_Store FOREIGN KEY (Store_id) REFERENCES Store(Store_id) ON DELETE CASCADE
