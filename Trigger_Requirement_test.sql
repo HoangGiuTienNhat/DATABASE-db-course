@@ -17,7 +17,9 @@ SET NOCOUNT ON;
 -- 4) Test 2: increase order total then apply coupon (expect success)
 -- 5) Test 3: reduce total while coupon applied (expect failure)
 -- 6) Test 4: increase total but still below new coupon minimum then apply (expect failure)
--- 7) Cleanup
+-- 7) Test 5: Delete one order item to reduce total below minimum (expect failure)
+-- 8) Test 6: Run a SELECT query (expect success, trigger should not fire)
+-- 9) Cleanup
 
 DECLARE @SellerUser INT, @BuyerUser INT, @Store INT, 
 		@Product INT, @VariantSKU NVARCHAR(100),
@@ -73,11 +75,10 @@ BEGIN TRY
 		INSERT INTO Ap_dung (Order_id, Item_id, Coupon_id)
 		VALUES (@OrderID, 1, @Coupon);
 	COMMIT TRANSACTION;
-	PRINT 'TEST 1: (IN RA NEU TRIGGER KHONG HOAT ĐONG)';
+	PRINT 'TEST 1: FAIL (IN RA NEU TRIGGER KHONG HOAT ĐONG)';
 END TRY
 BEGIN CATCH
 	PRINT 'TEST 1 MESSAGE: ' + ERROR_MESSAGE();
-	PRINT 'TRIGGER HOAT ĐONG: Coupon khong kha dung nhu mong đoi.';
 	SET @SuccessCount = @SuccessCount + 1;
 	IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
 END CATCH;
@@ -93,12 +94,11 @@ BEGIN TRY
 		VALUES (@OrderID, 1, @Coupon);
 	COMMIT TRANSACTION;
 	PRINT 'TEST 2: Success: coupon applied';
-	PRINT 'TRIGGER KHONG HOAT ĐONG: Coupon kha dung nhu mong đoi.';
 	SET @SuccessCount = @SuccessCount + 1;
 END TRY
 BEGIN CATCH
 	PRINT 'TEST 2 MESSAGE: ' + ERROR_MESSAGE();
-	PRINT 'TEST 2: (IN RA NẾU TRIGGER HOAT ĐONG)';
+	PRINT 'TEST 2: FAIL (IN RA NẾU TRIGGER HOAT ĐONG)';
 	IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
 END CATCH;
 
@@ -109,12 +109,12 @@ SET @TestCount = @TestCount + 1;
 BEGIN TRY
 	BEGIN TRANSACTION;
 		UPDATE Order_item SET So_luong = 1 WHERE Order_id = @OrderID AND Item_id = 1;
+		UPDATE Ap_dung SET Coupon_id = @Coupon WHERE Order_id = @OrderID AND Item_id = 1;
 	COMMIT TRANSACTION;
-	PRINT 'TEST 3: (IN RA NEU TRIGGER KHONG HOAT ĐONG)';
+	PRINT 'TEST 3: FAIL (IN RA NEU TRIGGER KHONG HOAT ĐONG)';
 END TRY
 BEGIN CATCH
 	PRINT 'TEST 3 MESSAGE: ' + ERROR_MESSAGE();
-	PRINT 'TRIGGER HOAT ĐONG: Coupon khong kha dung sau khi giam tong don hang.';
 	SET @SuccessCount = @SuccessCount + 1;
 	IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
 END CATCH;
@@ -133,17 +133,54 @@ BEGIN TRY
 		INSERT INTO Ap_dung (Order_id, Item_id, Coupon_id)
 		VALUES (@OrderID, 1, @Coupon);
 	COMMIT TRANSACTION;
-	PRINT 'TEST 4: (IN RA NEU TRIGGER KHONG HOAT ĐONG)';
+	PRINT 'TEST 4: FAIL (IN RA NEU TRIGGER KHONG HOAT ĐONG)';
 END TRY
 BEGIN CATCH
 	PRINT 'TEST 4 MESSAGE: ' + ERROR_MESSAGE();
-	PRINT 'TRIGGER HOAT ĐONG: Coupon khong kha dung nhu mong đoi.';
 	SET @SuccessCount = @SuccessCount + 1;
 	IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
 END CATCH;
 
 PRINT '===';
+PRINT '=== TEST 5: (TRIGGER HOAT ĐONG)';
+-- Delete one order item to reduce total below minimum
+SET @TestCount = @TestCount + 1;
+BEGIN TRY
+	BEGIN TRANSACTION;
+		UPDATE Order_item SET So_luong = 2 WHERE Order_id = @OrderID AND Item_id = 1;
+		UPDATE Ap_dung SET Coupon_id = @Coupon WHERE Order_id = @OrderID AND Item_id = 1;
+	COMMIT TRANSACTION;
+	PRINT 'TEST 5: FAIL (IN RA NEU TRIGGER KHONG HOAT ĐONG)';
+END TRY
+BEGIN CATCH
+	PRINT 'TEST 5 MESSAGE: ' + ERROR_MESSAGE();
+	SET @SuccessCount = @SuccessCount + 1;
+	IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
+END CATCH;
+
+--TESTcase 6: Khi dùng select để truy vấn thì TRIGGER không hoạt động
+PRINT '===';
+PRINT '=== TEST 6: (TRIGGER KHONG HOAT ĐONG)';
+SET @TestCount = @TestCount + 1;
+BEGIN TRY
+	BEGIN TRANSACTION;
+		-- Chạy một truy vấn SELECT để kiểm tra xem TRIGGER có ảnh hưởng đến nó không
+		SELECT * FROM Ap_dung WHERE Order_id = @OrderID;
+	COMMIT TRANSACTION;
+	PRINT 'TEST 6: Success: SELECT';
+	SET @SuccessCount = @SuccessCount + 1;
+END TRY	
+BEGIN CATCH
+	PRINT 'TEST 6 MESSAGE: ' + ERROR_MESSAGE();
+	PRINT 'TEST 6: FAIL (IN RA NEU TRIGGER HOAT ĐONG)';
+	IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
+END CATCH;
+
+PRINT '===';
 PRINT 'TEST RESULTS: ' + CAST(@SuccessCount AS NVARCHAR(10)) + ' out of ' + CAST(@TestCount AS NVARCHAR(10)) + ' tests passed.';
+
+
+--- CLEANUP
 PRINT '=== CLEANUP';
 BEGIN TRY
 	BEGIN TRANSACTION;
