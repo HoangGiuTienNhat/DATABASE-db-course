@@ -453,12 +453,6 @@ PRINT N'Tổng số triggers: 6';
 PRINT N'========================================';
 GO
 
-
-
-
-
-
-
 -- ============================================================
 -- PHẦN 2: NHẬP DỮ LIỆU MẪU THỰC TẾ (REALISTIC DATA)
 -- ============================================================
@@ -494,13 +488,13 @@ GO
 -- 2. INSERT SELLER 
 INSERT INTO Seller (User_id, Seller_type) VALUES 
 (1, 'Enterprise'), -- Samsung
-(2, 'Business'),   -- Coolmate
+(2, 'Business'),    -- Coolmate
 (3, 'Enterprise'), -- Fahasa
-(4, 'Business'),   -- Anker
+(4, 'Business'),    -- Anker
 (5, 'Enterprise'), -- La Roche-Posay
 (6, 'Enterprise'), -- Lock&Lock
 (7, 'Enterprise'), -- Bitis
-(8, 'Business'),   -- Hades
+(8, 'Business'),    -- Hades
 (9, 'Individual'), -- Hai Lua
 (10, 'Individual');-- Home Decor
 GO
@@ -511,17 +505,19 @@ INSERT INTO Buyer (User_id) VALUES
 GO
 
 -- 4. INSERT STORE 
-INSERT INTO Store (Seller_id, Ten_gian_hang, Mo_ta) VALUES
-(1, N'Samsung Official Store', N'Gian hàng chính hãng Samsung Việt Nam'),
-(2, N'Coolmate Official', N'Giải pháp ăn mặc cơ bản cho nam giới'),
-(3, N'Nhà Sách Fahasa', N'Hệ thống nhà sách chuyên nghiệp'),
-(4, N'Anker Flagship Store', N'Phụ kiện sạc cáp số 1 thế giới'),
-(5, N'La Roche-Posay Chính Hãng', N'Dược mỹ phẩm chăm sóc da'),
-(6, N'Lock&Lock Mall', N'Gia dụng thông minh Hàn Quốc'),
-(7, N'Biti''s Hunter', N'Nâng niu bàn chân Việt'),
-(8, N'HADES STUDIO', N'Streetwear Local Brand'),
-(9, N'Đặc Sản Hai Lúa', N'Khô gà, khô bò, cơm cháy'),
-(10, N'Decor Xinh', N'Trang trí nhà cửa phong cách Bắc Âu');
+
+-- 4. INSERT STORE 
+INSERT INTO Store (Seller_id, Ten_gian_hang, Mo_ta, Thong_tin_phap_ly) VALUES
+(1, N'Samsung Official Store', N'Gian hàng chính hãng Samsung Việt Nam', N'GPKD số 0303030303 do Sở KHĐT TP.HCM cấp'),
+(2, N'Coolmate Official', N'Giải pháp ăn mặc cơ bản cho nam giới', N'MST: 0123456789 - Công ty TNHH Fastech Asia'),
+(3, N'Nhà Sách Fahasa', N'Hệ thống nhà sách chuyên nghiệp', NULL),
+(4, N'Anker Flagship Store', N'Phụ kiện sạc cáp số 1 thế giới', NULL),
+(5, N'La Roche-Posay Chính Hãng', N'Dược mỹ phẩm chăm sóc da', NULL),
+(6, N'Lock&Lock Mall', N'Gia dụng thông minh Hàn Quốc', NULL),
+(7, N'Biti''s Hunter', N'Nâng niu bàn chân Việt', NULL),
+(8, N'HADES STUDIO', N'Streetwear Local Brand', NULL),
+(9, N'Đặc Sản Hai Lúa', N'Khô gà, khô bò, cơm cháy', NULL),
+(10, N'Decor Xinh', N'Trang trí nhà cửa phong cách Bắc Âu', NULL);
 GO
 
 -- 5. INSERT ADDRESS_STORE 
@@ -556,14 +552,14 @@ GO
 INSERT INTO Category (Ten, Mo_ta, Super_Category_id) VALUES
 (N'Thiết Bị Điện Tử', N'Electronic Devices', NULL),         -- 1
 (N'Thời Trang Nam', N'Men Fashion', NULL),                  -- 2
-(N'Nhà Sách Online', N'Books', NULL),                       -- 3
-(N'Sắc Đẹp', N'Beauty & Personal Care', NULL),              -- 4
-(N'Nhà Cửa & Đời Sống', N'Home & Living', NULL),            -- 5
-(N'Điện Thoại & Phụ Kiện', N'Phones & Accessories', 1),     -- 6
-(N'Áo Thun', N'T-Shirts', 2),                               -- 7
-(N'Sách Văn Học', N'Literature', 3),                        -- 8
-(N'Chăm Sóc Da', N'Skincare', 4),                           -- 9
-(N'Dụng Cụ Nhà Bếp', N'Kitchenware', 5);                    -- 10
+(N'Nhà Sách Online', N'Books', NULL),                        -- 3
+(N'Sắc Đẹp', N'Beauty & Personal Care', NULL),               -- 4
+(N'Nhà Cửa & Đời Sống', N'Home & Living', NULL),             -- 5
+(N'Điện Thoại & Phụ Kiện', N'Phones & Accessories', 1),      -- 6
+(N'Áo Thun', N'T-Shirts', 2),                                -- 7
+(N'Sách Văn Học', N'Literature', 3),                         -- 8
+(N'Chăm Sóc Da', N'Skincare', 4),                            -- 9
+(N'Dụng Cụ Nhà Bếp', N'Kitchenware', 5);                     -- 10
 GO
 
 -- 8. INSERT SHIPPER
@@ -592,23 +588,30 @@ GO
 
 -- 10. INSERT PRODUCT
 INSERT INTO Product (Store_id, Ten_san_pham, Mo_ta_chi_tiet, Tinh_trang, Trong_luong, Trang_thai_dang) VALUES
-(1, N'Điện thoại Samsung Galaxy S24 Ultra 5G', N'AI Phone, Camera 200MP, Titan Frame', 'New', 0.5, 'Hidden'),     
+(1, N'Điện thoại Samsung Galaxy S24 Ultra 5G', N'AI Phone, Camera 200MP, Titan Frame', 'New', 0.5, 'Hidden'),      
 (2, N'Áo Polo Nam Coolmate Excool', N'Công nghệ thoáng khí, khử mùi', 'New', 0.2, 'Hidden'),          
-(3, N'Sách - Cây Cam Ngọt Của Tôi', N'Tiểu thuyết kinh điển về Zeze', 'New', 0.4, 'Hidden'),    
+(3, N'Sách - Cây Cam Ngọt Của Tôi', N'Tiểu thuyết kinh điển về Zeze', 'New', 0.4, 'Hidden'),     
 (4, N'Cáp Sạc Nhanh Anker PowerLine III Flow', N'Siêu bền, mềm mại, sạc nhanh 20W', 'New', 0.1, 'Hidden'),
 (5, N'Kem Dưỡng La Roche-Posay Cicaplast Baume B5+', N'Phục hồi da, làm dịu kích ứng', 'New', 0.1, 'Hidden'),
-(6, N'Nồi Chiên Không Dầu Lock&Lock 5.2L', N'Công nghệ Rapid Air, Giỏ chiên chống dính', 'New', 5.0, 'Hidden'),     
-(7, N'Giày Thể Thao Biti''s Hunter X', N'Đế LiteFlex, quai kháng khuẩn', 'New', 1.0, 'Hidden'),    
-(8, N'Áo Thun HADES Wolf Gang', N'Cotton 2 chiều, in lụa cao cấp', 'New', 0.3, 'Hidden'),   
-(9, N'Khô Gà Lá Chanh 500g', N'Thơm ngon giòn rụm, đạt chuẩn VSATTP', 'New', 0.6, 'Hidden'),      
-(10, N'Gương Đứng Toàn Thân', N'Khung gỗ sồi, kích thước 1m6 x 50cm', 'New', 8.0, 'Hidden');    
+(6, N'Nồi Chiên Không Dầu Lock&Lock 5.2L', N'Công nghệ Rapid Air, Giỏ chiên chống dính', 'New', 5.0, 'Hidden'),      
+(7, N'Giày Thể Thao Biti''s Hunter X', N'Đế LiteFlex, quai kháng khuẩn', 'New', 1.0, 'Hidden'),     
+(8, N'Áo Thun HADES Wolf Gang', N'Cotton 2 chiều, in lụa cao cấp', 'New', 0.3, 'Hidden'),    
+(9, N'Khô Gà Lá Chanh 500g', N'Thơm ngon giòn rụm, đạt chuẩn VSATTP', 'New', 0.6, 'Hidden'),       
+(10, N'Gương Đứng Toàn Thân', N'Khung gỗ sồi, kích thước 1m6 x 50cm', 'New', 8.0, 'Hidden');     
 GO
 
--- 11. INSERT IMAGE
+-- 11. INSERT IMAGE (ĐÃ CẬP NHẬT LINK ẢNH PLACEHOLDER)
 INSERT INTO [Image] (Product_id, Image_id, Duong_dan_anh) VALUES
-(1, 1, 's24ultra_titan.jpg'), (2, 1, 'polo_excool_xanh.jpg'), (3, 1, 'cay_cam_ngot.jpg'),
-(4, 1, 'anker_cable_pink.jpg'), (5, 1, 'b5_cream.jpg'), (6, 1, 'lock_fryer_black.jpg'),
-(7, 1, 'hunter_x_white.jpg'), (8, 1, 'hades_wolf.jpg'), (9, 1, 'kho_ga.jpg'), (10, 1, 'guong_go.jpg');
+(1, 1, 'https://placehold.co/400x400/252f3f/white?text=S24+Ultra'), 
+(2, 1, 'https://placehold.co/400x400/252f3f/white?text=Polo+Excool'), 
+(3, 1, 'https://placehold.co/400x400/252f3f/white?text=Cay+Cam+Ngot'),
+(4, 1, 'https://placehold.co/400x400/252f3f/white?text=Anker+Cable'), 
+(5, 1, 'https://placehold.co/400x400/252f3f/white?text=LRP+B5'), 
+(6, 1, 'https://placehold.co/400x400/252f3f/white?text=LocknLock+Fryer'),
+(7, 1, 'https://placehold.co/400x400/252f3f/white?text=Bitis+Hunter'), 
+(8, 1, 'https://placehold.co/400x400/252f3f/white?text=Hades+Tee'), 
+(9, 1, 'https://placehold.co/400x400/252f3f/white?text=Kho+Ga'), 
+(10, 1, 'https://placehold.co/400x400/252f3f/white?text=Guong+Go');
 GO
 
 -- 12. INSERT THUOC_VE (Mapping)
@@ -645,7 +648,7 @@ GO
 
 -- 15. INSERT ORDER (12 Đơn hàng - 8 Đã giao, 4 trạng thái khác)
 INSERT INTO [Order] (Buyer_id, Trang_thai_don, Dia_chi_giao_hang) VALUES
-(11, N'Đã Giao', N'12 Tôn Đản, Q4'),        -- Mua Samsung
+(11, N'Đã Giao', N'12 Tôn Đản, Q4'),         -- Mua Samsung
 (12, N'Đã Giao', N'S2.05 Vin Grand Park'),  -- Mua Coolmate
 (13, N'Đã Giao', N'68 Cầu Giấy'),           -- Mua Sách
 (14, N'Đã Giao', N'Thảo Điền Q2'),          -- Mua Anker
@@ -655,7 +658,7 @@ INSERT INTO [Order] (Buyer_id, Trang_thai_don, Dia_chi_giao_hang) VALUES
 (18, N'Đã Giao', N'HAGL Đà Nẵng'),          -- Mua Hades
 (19, N'Chờ Lấy Hàng', N'Trần Phú Nha Trang'), -- Mua Khô gà
 (20, N'Đang Vận Chuyển', N'Ninh Kiều Cần Thơ'), -- Mua Gương
-(11, N'Đã Hủy', N'12 Tôn Đản, Q4'),         -- Đổi ý
+(11, N'Đã Hủy', N'12 Tôn Đản, Q4'),          -- Đổi ý
 (12, N'Chờ Xác Nhận', N'S2.05 Vin Grand Park');
 GO
 
@@ -765,28 +768,28 @@ INSERT INTO Product (Store_id, Ten_san_pham, Mo_ta_chi_tiet, Tinh_trang, Trong_l
 (3, N'Sách - Tôi Thấy Hoa Vàng Trên Cỏ Xanh', N'Nguyễn Nhật Ánh - Văn học Việt Nam', 'New', 0.35, 'Active');
 GO
 
--- Thêm hình ảnh cho các sản phẩm mới (Product_id từ 11-19)
+-- Thêm hình ảnh cho các sản phẩm mới (Product_id từ 11-19) - ĐÃ CẬP NHẬT LINK ẢNH
 INSERT INTO [Image] (Product_id, Image_id, Duong_dan_anh) VALUES
 -- Samsung (Product 11, 12, 13)
-(11, 1, 'buds2pro_purple.jpg'),
-(11, 2, 'buds2pro_white.jpg'),
-(12, 1, 'watch6_graphite.jpg'),
-(12, 2, 'watch6_silver.jpg'),
-(13, 1, 'tv55_qled_front.jpg'),
-(13, 2, 'tv55_qled_side.jpg'),
+(11, 1, 'https://placehold.co/400x400/252f3f/white?text=Buds2+Pro+Purple'),
+(11, 2, 'https://placehold.co/400x400/252f3f/white?text=Buds2+Pro+White'),
+(12, 1, 'https://placehold.co/400x400/252f3f/white?text=Watch6+Graphite'),
+(12, 2, 'https://placehold.co/400x400/252f3f/white?text=Watch6+Silver'),
+(13, 1, 'https://placehold.co/400x400/252f3f/white?text=TV+QLED+Front'),
+(13, 2, 'https://placehold.co/400x400/252f3f/white?text=TV+QLED+Side'),
 
 -- Coolmate (Product 14, 15, 16)
-(14, 1, 'short_excool_black.jpg'),
-(14, 2, 'short_excool_navy.jpg'),
-(15, 1, 'somi_basic_white.jpg'),
-(15, 2, 'somi_basic_blue.jpg'),
-(16, 1, 'jacket_wind_black.jpg'),
-(16, 2, 'jacket_wind_navy.jpg'),
+(14, 1, 'https://placehold.co/400x400/252f3f/white?text=Short+Excool+Black'),
+(14, 2, 'https://placehold.co/400x400/252f3f/white?text=Short+Excool+Navy'),
+(15, 1, 'https://placehold.co/400x400/252f3f/white?text=Shirt+Basic+White'),
+(15, 2, 'https://placehold.co/400x400/252f3f/white?text=Shirt+Basic+Blue'),
+(16, 1, 'https://placehold.co/400x400/252f3f/white?text=Jacket+Wind+Black'),
+(16, 2, 'https://placehold.co/400x400/252f3f/white?text=Jacket+Wind+Navy'),
 
 -- Fahasa (Product 17, 18, 19)
-(17, 1, 'dacnhantam_cover.jpg'),
-(18, 1, 'nhagiakim_cover.jpg'),
-(19, 1, 'hoavang_cover.jpg');
+(17, 1, 'https://placehold.co/400x400/252f3f/white?text=Dac+Nhan+Tam'),
+(18, 1, 'https://placehold.co/400x400/252f3f/white?text=Nha+Gia+Kim'),
+(19, 1, 'https://placehold.co/400x400/252f3f/white?text=Hoa+Vang+Co+Xanh');
 GO
 
 -- Thêm mapping Category cho sản phẩm mới
@@ -844,7 +847,7 @@ GO
 
 -- Thêm đơn hàng cho sản phẩm mới (đã giao để có thể đánh giá)
 INSERT INTO [Order] (Buyer_id, Trang_thai_don, Dia_chi_giao_hang) VALUES
-(13, N'Đã Giao', N'Ngõ 68 Cầu Giấy'),           -- Mua Buds2 Pro
+(13, N'Đã Giao', N'Ngõ 68 Cầu Giấy'),            -- Mua Buds2 Pro
 (14, N'Đã Giao', N'Biệt thự Thảo Điền, Q2'),   -- Mua Watch 6
 (15, N'Đã Giao', N'Landmark 81'),                -- Mua TV
 (16, N'Đã Giao', N'KTX ĐHQG, Thủ Đức'),        -- Mua Short
@@ -914,11 +917,200 @@ INSERT INTO Danh_gia (Product_id, Order_id, So_sao, Noi_dung_binh_luan, Phan_hoi
 (18, 20, 5, N'Nhà Giả Kim luôn là cuốn sách yêu thích. Fahasa giao nhanh, đóng gói cẩn thận.', NULL);
 GO
 
-
-
 PRINT N'========================================';
 PRINT N'========================================';
 PRINT N'Hoàn thành tạo dữ liệu mẫu';
 PRINT N'========================================';
 PRINT N'========================================';
+GO
+
+
+
+PRINT N'--- BẮT ĐẦU QUÁ TRÌNH THÊM DỮ LIỆU MỚI ---';
+
+-- ============================================================
+-- 1. THÊM SẢN PHẨM (PRODUCT) - ID TỪ 20 TRỞ ĐI
+-- ============================================================
+
+-- STORE 1: SAMSUNG (6 Sản phẩm mới: ID 20 -> 25)
+INSERT INTO Product (Store_id, Ten_san_pham, Mo_ta_chi_tiet, Tinh_trang, Trong_luong, Trang_thai_dang) VALUES
+(1, N'Samsung Galaxy S23 FE 5G', N'Camera chuẩn Flagship, Hiệu năng mạnh mẽ với Exynos 2200, Pin 4500mAh', 'New', 0.2, 'Active'), -- ID 20
+(1, N'Loa Thanh Samsung HW-Q990C', N'Âm thanh vòm chuẩn 11.1.4 kênh, Q-Symphony, SpaceFit Sound Pro', 'New', 7.5, 'Active'), -- ID 21
+(1, N'Samsung Galaxy A55 5G', N'Khung viền kim loại, Camera chụp đêm sắc nét, Khánh nước IP67', 'New', 0.2, 'Active'), -- ID 22
+(1, N'Màn hình Thông Minh Samsung M8', N'Không cần PC, tích hợp Office 365 và Netflix, Camera SlimFit quay 4K', 'New', 4.0, 'Active'), -- ID 23
+(1, N'Tủ Chăm Sóc Quần Áo AirDresser', N'Hấp sấy chuẩn spa, khử khuẩn, giữ nếp quần áo, sấy khô nhẹ nhàng', 'New', 80.0, 'Active'), -- ID 24
+(1, N'Máy Hút Bụi Cầm Tay Jet 75', N'Lực hút 200W, Hệ thống lọc đa lớp 99.999%, Pin rời linh hoạt', 'New', 2.5, 'Active'); -- ID 25
+GO
+
+-- STORE 2: COOLMATE (6 Sản phẩm mới: ID 26 -> 31)
+INSERT INTO Product (Store_id, Ten_san_pham, Mo_ta_chi_tiet, Tinh_trang, Trong_luong, Trang_thai_dang) VALUES
+(2, N'Áo Polo Thể Thao ProMax-S1', N'Vải Poly thể thao, thấm hút mồ hôi cực nhanh, công nghệ Chafe-Free', 'New', 0.2, 'Active'), -- ID 26
+(2, N'Quần Jogger Kaki Excool', N'Co giãn 4 chiều, dáng Slimfit, mặc đi làm đi chơi đều đẹp', 'New', 0.4, 'Active'), -- ID 27
+(2, N'Áo Hoodie Nỉ Bông Essential', N'Giữ ấm tốt, form rộng thoải mái, không xù lông sau khi giặt', 'New', 0.5, 'Active'), -- ID 28
+(2, N'Combo 3 Quần Lót Boxer Modal', N'Gỗ sồi thiên nhiên, mềm mại gấp 2 lần Cotton, đai lưng êm ái', 'New', 0.15, 'Active'), -- ID 29
+(2, N'Áo Ba Lỗ Thể Thao Training', N'Thoáng nách, vải nhẹ, chuyên dụng tập Gym và chạy bộ', 'New', 0.1, 'Active'), -- ID 30
+(2, N'Tất Cổ Cao Bamboo Khử Mùi', N'Công nghệ Nano bạc, chống hôi chân tuyệt đối, cổ chun co giãn', 'New', 0.05, 'Active'); -- ID 31
+GO
+
+-- ============================================================
+-- 2. THÊM HÌNH ẢNH (IMAGE)
+-- ============================================================
+INSERT INTO [Image] (Product_id, Image_id, Duong_dan_anh) VALUES
+-- Samsung
+(20, 1, 'https://img.samsung.com/s23fe_mint.jpg'),
+(21, 1, 'https://img.samsung.com/soundbar_q990c.jpg'),
+(22, 1, 'https://img.samsung.com/a55_navy.jpg'),
+(23, 1, 'https://img.samsung.com/monitor_m8_white.jpg'),
+(24, 1, 'https://img.samsung.com/airdresser.jpg'),
+(25, 1, 'https://img.samsung.com/jet75_vacuum.jpg'),
+-- Coolmate
+(26, 1, 'https://img.coolmate.me/polo_promax_blue.jpg'),
+(27, 1, 'https://img.coolmate.me/jogger_kaki_black.jpg'),
+(28, 1, 'https://img.coolmate.me/hoodie_grey.jpg'),
+(29, 1, 'https://img.coolmate.me/boxer_modal_set3.jpg'),
+(30, 1, 'https://img.coolmate.me/tanktop_gym_red.jpg'),
+(31, 1, 'https://img.coolmate.me/socks_bamboo_high.jpg');
+GO
+
+-- ============================================================
+-- 3. THÊM CATEGORY MAPPING (THUOC_VE)
+-- ============================================================
+INSERT INTO Thuoc_ve (Category_id, Product_id) VALUES
+-- Samsung
+(6, 20), (6, 22), -- Điện thoại
+(1, 21), (1, 23), -- Điện tử (Loa, Màn hình)
+(5, 24), (5, 25), -- Nhà cửa (Tủ, Máy hút bụi)
+-- Coolmate
+(7, 26), (7, 30), -- Áo thun/Ba lỗ
+(2, 27), (2, 28), -- Thời trang nam (Quần, Hoodie)
+(2, 29), (2, 31); -- Đồ lót/Tất
+GO
+
+-- ============================================================
+-- 4. THÊM BIẾN THỂ (VARIANT) - SKU
+-- ============================================================
+INSERT INTO Variant (Product_id, SKU, Mau_sac, Kich_thuoc, Gia_ban, So_luong_ton_kho) VALUES
+-- Samsung
+(20, 'S23FE-8-128-GRN', N'Xanh Mint', '128GB', 12990000, 40),
+(21, 'HW-Q990C-BLK', N'Đen', 'Standard', 21900000, 10),
+(22, 'A55-5G-NAVY', N'Tím Navy', '256GB', 9690000, 50),
+(23, 'M8-32INCH-WHT', N'Trắng', '32 inch', 14500000, 15),
+(24, 'AIRDRESSER-DF60', N'Mặt Gương', 'Standard', 29900000, 5),
+(25, 'JET75-PREMIUM', N'Bạc', '200W', 8500000, 20),
+-- Coolmate
+(26, 'POLO-PRO-BLU-L', N'Xanh Biển', 'L', 249000, 80),
+(27, 'JOGGER-KAKI-XL', N'Đen', 'XL', 399000, 60),
+(28, 'HOODIE-GREY-M', N'Xám', 'M', 499000, 45),
+(29, 'BOXER-MODAL-L', N'Đa Sắc', 'L', 299000, 120),
+(30, 'TANK-GYM-RED-L', N'Đỏ', 'L', 159000, 70),
+(31, 'SOCKS-HIGH-BLK', N'Đen', 'Freesize', 49000, 300);
+GO
+
+-- ============================================================
+-- 5. TẠO ĐƠN HÀNG MỚI (ORDER) - BẮT BUỘC TỪ 21
+-- ============================================================
+
+-- QUAN TRỌNG: Lệnh này đặt lại bộ đếm ID về 20, để đơn hàng tiếp theo CHẮC CHẮN là 21.
+DBCC CHECKIDENT ('[Order]', RESEED, 20);
+GO
+
+-- Tạo 12 Đơn hàng (Sẽ có ID từ 21 -> 32)
+INSERT INTO [Order] (Buyer_id, Trang_thai_don, Dia_chi_giao_hang) VALUES
+(13, N'Đã Giao', N'68 Cầu Giấy, HN'),         -- Order 21 (Mua S23 FE)
+(15, N'Đã Giao', N'Landmark 81, HCM'),        -- Order 22 (Mua Loa Q990C)
+(16, N'Đã Giao', N'KTX Khu A, Thủ Đức'),      -- Order 23 (Mua A55)
+(18, N'Đã Giao', N'HAGL Đà Nẵng'),            -- Order 24 (Mua Hoodie)
+(19, N'Đã Giao', N'Nha Trang'),               -- Order 25 (Mua Boxer)
+(20, N'Đã Giao', N'Cần Thơ'),                 -- Order 26 (Mua Jogger)
+(13, N'Đã Giao', N'68 Cầu Giấy, HN'),         -- Order 27 (Mua Máy hút bụi)
+(14, N'Đã Giao', N'Thảo Điền, Q2'),           -- Order 28 (Mua Polo)
+(11, N'Đã Giao', N'12 Tôn Đản, Q4'),          -- Order 29 (Mua Màn hình M8)
+(12, N'Đã Giao', N'S2.05 Vin Grand Park'),    -- Order 30 (Mua Tất)
+(17, N'Đã Giao', N'5 Láng Hạ, HN'),           -- Order 31 (Mua Ba lỗ)
+(15, N'Đã Giao', N'Landmark 81, HCM');        -- Order 32 (Mua Tủ AirDresser)
+GO
+
+-- ============================================================
+-- 6. TẠO CHI TIẾT ĐƠN (ORDER_ITEM)
+-- ============================================================
+-- Mapping thủ công chính xác ID 21-32 với Product 20-31
+INSERT INTO Order_item (Order_id, Item_id, Product_id, SKU, So_luong) VALUES
+(21, 1, 20, 'S23FE-8-128-GRN', 1),  -- Đơn 21 mua S23 FE
+(22, 1, 21, 'HW-Q990C-BLK', 1),     -- Đơn 22 mua Loa
+(23, 1, 22, 'A55-5G-NAVY', 1),      -- Đơn 23 mua A55
+(24, 1, 28, 'HOODIE-GREY-M', 1),    -- Đơn 24 mua Hoodie
+(25, 1, 29, 'BOXER-MODAL-L', 2),    -- Đơn 25 mua 2 Boxer
+(26, 1, 27, 'JOGGER-KAKI-XL', 1),   -- Đơn 26 mua Jogger
+(27, 1, 25, 'JET75-PREMIUM', 1),    -- Đơn 27 mua Máy hút bụi
+(28, 1, 26, 'POLO-PRO-BLU-L', 2),   -- Đơn 28 mua 2 Polo
+(29, 1, 23, 'M8-32INCH-WHT', 1),    -- Đơn 29 mua Màn hình
+(30, 1, 31, 'SOCKS-HIGH-BLK', 5),   -- Đơn 30 mua 5 đôi tất
+(31, 1, 30, 'TANK-GYM-RED-L', 1),   -- Đơn 31 mua Ba lỗ
+(32, 1, 24, 'AIRDRESSER-DF60', 1);  -- Đơn 32 mua Tủ chăm sóc áo
+GO
+
+-- ============================================================
+-- 7. THANH TOÁN (PAYMENT)
+-- ============================================================
+INSERT INTO Payment (Order_id, Trang_thai_thanh_toan, Phuong_thuc_thanh_toan, Ma_giao_dich) VALUES
+(21, N'Đã Thanh Toán', 'ShopeePay', 'TX21'),
+(22, N'Đã Thanh Toán', 'Credit Card', 'TX22'),
+(23, N'Đã Thanh Toán', 'COD', 'TX23'),
+(24, N'Đã Thanh Toán', 'SPayLater', 'TX24'),
+(25, N'Đã Thanh Toán', 'COD', 'TX25'),
+(26, N'Đã Thanh Toán', 'Bank Transfer', 'TX26'),
+(27, N'Đã Thanh Toán', 'Credit Card', 'TX27'),
+(28, N'Đã Thanh Toán', 'ShopeePay', 'TX28'),
+(29, N'Đã Thanh Toán', 'Bank Transfer', 'TX29'),
+(30, N'Đã Thanh Toán', 'COD', 'TX30'),
+(31, N'Đã Thanh Toán', 'ShopeePay', 'TX31'),
+(32, N'Đã Thanh Toán', 'Credit Card', 'TX32');
+GO
+
+-- ============================================================
+-- 8. VẬN CHUYỂN (SHIPMENT)
+-- ============================================================
+INSERT INTO Shipment (Order_id, Shipper_id, Phuong_thuc_van_chuyen, Ma_theo_doi, Ngay_gui, Ngay_giao_du_kien, Ngay_giao_thuc_te) VALUES
+(21, 1, N'Nhanh', 'SPX-21', DATEADD(d,-3,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(22, 6, N'Hàng Cồng Kềnh', 'NJV-22', DATEADD(d,-4,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()), -- Loa to
+(23, 2, N'Nhanh', 'GHN-23', DATEADD(d,-2,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(24, 3, N'Tiết Kiệm', 'GHTK-24', DATEADD(d,-5,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(25, 1, N'Nhanh', 'SPX-25', DATEADD(d,-3,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(26, 2, N'Nhanh', 'GHN-26', DATEADD(d,-3,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(27, 4, N'Nhanh', 'VTP-27', DATEADD(d,-4,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(28, 4, N'Nhanh', 'VTP-28', DATEADD(d,-2,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(29, 6, N'Hàng Cồng Kềnh', 'NJV-29', DATEADD(d,-3,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()), -- Màn hình to
+(30, 3, N'Tiết Kiệm', 'GHTK-30', DATEADD(d,-4,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(31, 1, N'Nhanh', 'SPX-31', DATEADD(d,-2,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()),
+(32, 6, N'Hàng Cồng Kềnh', 'NJV-32', DATEADD(d,-5,GETDATE()), DATEADD(d,-1,GETDATE()), GETDATE()); -- Tủ rất to
+GO
+
+-- ============================================================
+-- 9. ÁP DỤNG COUPON
+-- ============================================================
+INSERT INTO Ap_dung (Order_id, Item_id, Coupon_id) VALUES
+(21, 1, 8), (22, 1, 8), (23, 1, 1), (24, 1, 5), 
+(25, 1, 4), (26, 1, 5), (27, 1, 1), (28, 1, 6),
+(29, 1, 8), (30, 1, 4), (31, 1, 6), (32, 1, 8);
+GO
+
+-- ============================================================
+-- 10. ĐÁNH GIÁ (REVIEW)
+-- ============================================================
+INSERT INTO Danh_gia (Product_id, Order_id, So_sao, Noi_dung_binh_luan, Phan_hoi_cua_nguoi_ban) VALUES
+(20, 21, 5, N'S23 FE màu mint siêu đẹp, chụp ảnh nét căng.', N'Cảm ơn quý khách đã tin dùng Samsung.'),
+(21, 22, 5, N'Loa nghe nhạc xem phim như rạp, bass chắc nịch.', NULL),
+(22, 23, 5, N'A55 thiết kế đẹp, pin trâu dùng cả ngày chưa hết.', NULL),
+(28, 24, 4, N'Hoodie ấm, nỉ dày dặn, nhưng giao hàng hơi chậm.', N'Shop xin lỗi vì sự chậm trễ của bên vận chuyển ạ.'),
+(29, 25, 5, N'Boxer Modal mặc như không mặc, rất thích.', NULL),
+(27, 26, 5, N'Quần kaki co giãn tốt, mặc đi làm rất lịch sự.', NULL),
+(25, 27, 5, N'Máy hút mạnh, nhẹ tay, hút sạch bụi mịn trên sofa.', N'Samsung cảm ơn đánh giá của bạn.'),
+(26, 28, 5, N'Áo thể thao thoáng mát, mồ hôi khô nhanh.', NULL),
+(23, 29, 5, N'Màn hình thông minh quá tiện, không cần PC vẫn làm việc được.', NULL),
+(31, 30, 5, N'Tất khử mùi tốt, đi cả ngày không hôi chân.', NULL),
+(30, 31, 4, N'Ba lỗ vải nhẹ, nhưng màu đỏ hơi tươi quá.', NULL),
+(24, 32, 5, N'Tủ xịn, quần áo thơm phức phẳng phiu, đáng tiền.', N'Cảm ơn quý khách đã lựa chọn sản phẩm cao cấp của Samsung.');
+GO
+
+PRINT N'--- HOÀN TẤT! ĐÃ THÊM 12 SP MỚI VÀ 12 ĐƠN HÀNG (ID 21-32) ---';
 GO
