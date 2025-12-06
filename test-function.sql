@@ -4,7 +4,6 @@
 
 PRINT N'--- TEST CASE 1: Store 5 (La Roche-Posay)  ---'
 -- Store 5 - ban 2 san pham, phi san 10%
--- Kiểm tra: Lấy doanh thu từ hàm
 SELECT dbo.fn_Tinh_Doanh_Thu_Rong_Store(5, MONTH(GETDATE()), YEAR(GETDATE())) AS Doanh_Thu_Rong_Thuc_Te;
 
 PRINT N'--- TEST CASE 2: Store ID không tồn tại (Validate) ---'
