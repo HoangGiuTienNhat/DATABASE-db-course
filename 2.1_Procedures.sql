@@ -45,7 +45,7 @@ BEGIN
 		RETURN;
 	END
 
-	--2. kiểm tra tên sản phầm không được trống
+	--2. kiểm tra tên sản phẩm không được trống
 	IF @Ten_san_pham IS NULL OR @Ten_san_pham = ''
 	BEGIN
 		RAISERROR(N'Lỗi: Tên sản phẩm không được để trống', 16, 1);
@@ -180,6 +180,16 @@ BEGIN
         RETURN;
     END
 
+	--8. kiểm tra sản phẩm có bị xóa hay chưa
+	DECLARE @IsDeleted VARCHAR(20);
+    SELECT @IsDeleted = Trang_thai_dang  FROM Product WHERE Product_id = @Product_id;
+	IF @IsDeleted = 'Deleted'
+	BEGIN
+        RAISERROR(N'Lỗi: Sản phẩm đã bị xóa rồi.', 16, 1);
+        RETURN;
+    END
+
+
 	--tiến hành cập nhật
 	UPDATE Product
     SET Ten_san_pham = @Ten_san_pham,
@@ -206,6 +216,15 @@ BEGIN
     IF NOT EXISTS (SELECT Product_id FROM Product WHERE Product_id = @Product_id)
     BEGIN
         RAISERROR(N'Lỗi: Sản phẩm muốn xóa không tồn tại.', 16, 1);
+        RETURN;
+    END
+
+	--2. kiểm tra sản phẩm có bị xóa hay chưa
+	DECLARE @IsDeleted VARCHAR(20);
+    SELECT @IsDeleted = Trang_thai_dang  FROM Product WHERE Product_id = @Product_id;
+	IF @IsDeleted = 'Deleted'
+	BEGIN
+        RAISERROR(N'Lỗi: Sản phẩm đã bị xóa trước đó.', 16, 1);
         RETURN;
     END
 

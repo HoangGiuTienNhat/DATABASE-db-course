@@ -209,6 +209,25 @@ EXEC Update_Product
     @Trang_thai_dang = Hidden;
 GO
 
+--9. Trường hợp sản phẩm đã bị xóa
+
+--CHỈNH ID ĐỂ TEST NHEN
+    DECLARE @Id_theo_ten INT;
+    SET @Id_theo_ten = 13;
+
+    EXEC Delete_Product
+    @Product_id = @Id_theo_ten;
+
+    EXEC Update_Product
+    @Product_id = @Id_theo_ten,
+    @Ten_san_pham = N'Bánh tráng trộn đóng hộp (Đã sửa)',
+    @Mo_ta_chi_tiet = N'Bánh tráng xuất xứ Trung Quốc, đảm bảo chất lượng',
+    @Tinh_trang = 'New',
+    @Trong_luong = 1,
+    @Trang_thai_dang = Hidden;
+GO
+    
+
 
 -- ============================================================
 -- THỦ TỤC DELETE
@@ -268,5 +287,18 @@ GO
 --3. Trường hợp sản phẩm không tồn tại
 EXEC Delete_Product
         @Product_id = 0
+
+--4. Trường hợp sản phẩm đã bị xóa
+
+--CHỈNH ID ĐỂ TEST NHEN
+    DECLARE @Id_theo_ten INT;
+    SET @Id_theo_ten = 13;
+
+    EXEC Delete_Product
+    @Product_id = @Id_theo_ten;
+
+    EXEC Delete_Product
+    @Product_id = @Id_theo_ten;
+GO
 
 -- SELECT * FROM "Product"
