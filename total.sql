@@ -312,9 +312,12 @@ GO
 -- ============================================================
 
 -- TRIGGER 1: Người mua không được mua sản phẩm từ cửa hàng của chính mình
+DROP TRIGGER IF EXISTS trg_Prevent_Self_Purchase;
 GO
+
+-- TẠO TRIGGER MỚI TRÊN Order_item
 CREATE TRIGGER trg_Prevent_Self_Purchase
-ON [Order]
+ON Order_item
 AFTER INSERT, UPDATE
 AS
 BEGIN
@@ -323,17 +326,18 @@ BEGIN
     IF EXISTS (
         SELECT 1
         FROM inserted i
-        INNER JOIN Order_item oi ON i.Order_id = oi.Order_id
-        INNER JOIN Product p ON oi.Product_id = p.Product_id
+        INNER JOIN [Order] o ON i.Order_id = o.Order_id
+        INNER JOIN Product p ON i.Product_id = p.Product_id
         INNER JOIN Store s ON p.Store_id = s.Store_id
-        WHERE i.Buyer_id = s.Seller_id
+        WHERE o.Buyer_id = s.Seller_id
     )
     BEGIN
-        RAISERROR (N'Người mua không được phép đặt mua sản phẩm từ cửa hàng của chính mình.', 16, 1);
+        RAISERROR (N'The buyer is not allowed to purchase products from their own store.', 16, 1);
         ROLLBACK TRANSACTION;
     END
 END;
 GO
+
 
 -- TRIGGER 2: Sản phẩm chỉ được Active khi có ít nhất 1 ảnh và thuộc category
 GO
@@ -384,67 +388,10 @@ BEGIN
 END;
 GO
 
--- TRIGGER 4: Kiểm tra tồn kho trước khi tạo order_item
-GO
-CREATE TRIGGER trg_Check_Stock_Before_Order
-ON Order_item
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    
-    IF EXISTS (
-        SELECT 1
-        FROM inserted i
-        INNER JOIN Variant v ON i.Product_id = v.Product_id AND i.SKU = v.SKU
-        WHERE v.So_luong_ton_kho < i.So_luong
-    )
-    BEGIN
-        RAISERROR (N'Số lượng sản phẩm trong kho không đủ để đáp ứng đơn hàng.', 16, 1);
-        ROLLBACK TRANSACTION;
-    END
-END;
-GO
 
--- TRIGGER 5: Coupon phải còn hạn sử dụng
-GO
-CREATE TRIGGER trg_Coupon_Valid
-ON Ap_dung
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    
-    IF EXISTS (
-        SELECT 1
-        FROM inserted i
-        INNER JOIN Coupon c ON i.Coupon_id = c.Coupon_id
-        WHERE c.Thoi_han < GETDATE()
-    )
-    BEGIN
-        RAISERROR (N'Mã giảm giá đã hết hạn sử dụng.', 16, 1);
-        ROLLBACK TRANSACTION;
-    END
-END;
-GO
 
--- TRIGGER 6: Tự động cập nhật ngày giao thực tế khi shipment "Đã Giao"
-GO
-CREATE TRIGGER trg_Update_Delivery_Date
-ON [Order]
-AFTER UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
-    
-    UPDATE s
-    SET Ngay_giao_thuc_te = GETDATE()
-    FROM Shipment s
-    INNER JOIN inserted i ON s.Order_id = i.Order_id
-    WHERE i.Trang_thai_don = N'Đã Giao'
-    AND s.Ngay_giao_thuc_te IS NULL;
-END;
-GO
+
+
 
 PRINT N'========================================';
 PRINT N'Tạo cơ sở dữ liệu thành công!';
