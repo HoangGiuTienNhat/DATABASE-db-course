@@ -42,6 +42,9 @@ SELECT
 FROM [User] WHERE User_id = 11;
 
 PRINT N'--- TEST CASE 2: Buyer 12 (Mua nhiều đơn) ---'
+--1 don +10 1 review +2
+--1 hoan tra -20
+--ket qua mong doi: 92
 SELECT 
     User_id AS BuyerID, 
     Ho + ' ' + Ten AS Ho_Ten,

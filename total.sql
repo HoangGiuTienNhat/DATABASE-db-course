@@ -972,7 +972,7 @@ INSERT INTO [Order] (Buyer_id, Trang_thai_don, Dia_chi_giao_hang) VALUES
 (13, N'Đã Giao', N'68 Cầu Giấy, HN'),         -- Order 27 (Mua Máy hút bụi)
 (14, N'Đã Giao', N'Thảo Điền, Q2'),           -- Order 28 (Mua Polo)
 (11, N'Đã Giao', N'12 Tôn Đản, Q4'),          -- Order 29 (Mua Màn hình M8)
-(12, N'Đã Giao', N'S2.05 Vin Grand Park'),    -- Order 30 (Mua Tất)
+(12, N'Hoàn Trả', N'S2.05 Vin Grand Park'),    -- Order 30 (Mua Tất)
 (17, N'Đã Giao', N'5 Láng Hạ, HN'),           -- Order 31 (Mua Ba lỗ)
 (15, N'Đã Giao', N'Landmark 81, HCM');        -- Order 32 (Mua Tủ AirDresser)
 GO
@@ -1054,7 +1054,7 @@ INSERT INTO Danh_gia (Product_id, Order_id, So_sao, Noi_dung_binh_luan, Phan_hoi
 (25, 27, 5, N'Máy hút mạnh, nhẹ tay, hút sạch bụi mịn trên sofa.', N'Samsung cảm ơn đánh giá của bạn.'),
 (26, 28, 5, N'Áo thể thao thoáng mát, mồ hôi khô nhanh.', NULL),
 (23, 29, 5, N'Màn hình thông minh quá tiện, không cần PC vẫn làm việc được.', NULL),
-(31, 30, 5, N'Tất khử mùi tốt, đi cả ngày không hôi chân.', NULL),
+
 (30, 31, 4, N'Ba lỗ vải nhẹ, nhưng màu đỏ hơi tươi quá.', NULL),
 (24, 32, 5, N'Tủ xịn, quần áo thơm phức phẳng phiu, đáng tiền.', N'Cảm ơn quý khách đã lựa chọn sản phẩm cao cấp của Samsung.');
 GO
